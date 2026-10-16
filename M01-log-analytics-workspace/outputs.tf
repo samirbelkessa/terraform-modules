@@ -26,8 +26,8 @@ output "configuration" {
     retention_interactive = var.retention_in_days
     retention_total       = var.total_retention_in_days
     retention_archive     = local.archive_retention_days
-    internet_ingestion    = var.internet_ingestion_access_type
-    internet_query        = var.internet_query_access_type
+    internet_ingestion    = var.internet_ingestion_enabled
+    internet_query        = var.internet_query_enabled
     solutions_deployed    = keys(local.solutions_to_deploy)
     dr_enabled            = var.enable_cross_region_workspace
     dr_workspace_id       = try(azurerm_log_analytics_workspace.secondary[0].id, null)
