@@ -155,7 +155,7 @@ resource "azurerm_monitor_diagnostic_setting" "blob_service" {
 }
 
 module "naming" {
-  source = "git::https://github.com/Experteq-MSP/terraform-modules//F02-naming-convention?ref=main"
+  source = "git::https://github.com/samirbelkessa/terraform-modules//F02-naming-convention?ref=main"
 
 
   workload      = var.workload

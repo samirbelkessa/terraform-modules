@@ -205,7 +205,7 @@ data "azurerm_client_config" "hub" {
 }
 
 module "spoke" {
-  source = "git::https://github.com/Experteq-MSP/terraform-modules//L02-Spoke_v2?ref=main"
+  source = "git::https://github.com/samirbelkessa/terraform-modules//L02-Spoke_v2?ref=main"
 
 
   workload                         = var.client_prefix
