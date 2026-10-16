@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source                = "hashicorp/azurerm"
-      version               = ">= 5.8.0"
+      version               = ">= 3.80.0"
       configuration_aliases = [azurerm.spoke, azurerm.hub]
     }
   }
