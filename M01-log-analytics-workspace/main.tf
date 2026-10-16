@@ -9,8 +9,8 @@ resource "azurerm_log_analytics_workspace" "this" {
   name                               = local.workspace_name
   location                           = var.location
   local_authentication_enabled       = var.local_authentication_enabled
-  internet_query_access_type         = var.internet_query_access_type
-  internet_ingestion_access_type     = var.internet_ingestion_access_type
+  internet_query_enabled             = var.internet_query_enabled
+  internet_ingestion_enabled         = var.internet_ingestion_enabled
   daily_quota_gb                     = var.daily_quota_gb
 
   lifecycle {
@@ -77,8 +77,8 @@ resource "azurerm_log_analytics_workspace" "secondary" {
   name                           = local.secondary_workspace_name
   location                       = var.secondary_location
   local_authentication_enabled   = var.local_authentication_enabled
-  internet_query_access_type     = var.internet_query_access_type
-  internet_ingestion_access_type = var.internet_ingestion_access_type
+  internet_query_enabled         = var.internet_query_enabled
+  internet_ingestion_enabled     = var.internet_ingestion_enabled
   count                          = var.enable_cross_region_workspace ? 1 : 0
 }
 

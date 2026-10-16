@@ -125,16 +125,16 @@ variable "instance" {
   default     = "001"
 }
 
-variable "internet_ingestion_access_type" {
-  description = "Allow data ingestion from public internet. Values: Enabled, Disabled."
-  type        = string
-  default     = "Enabled"
+variable "internet_ingestion_enabled" {
+  description = "Allow data ingestion from public internet."
+  type        = bool
+  default     = true
 }
 
-variable "internet_query_access_type" {
-  description = "Allow queries from public internet. Values: Enabled, Disabled."
-  type        = string
-  default     = "Enabled"
+variable "internet_query_enabled" {
+  description = "Allow queries from public internet."
+  type        = bool
+  default     = true
 }
 
 variable "local_authentication_enabled" {
