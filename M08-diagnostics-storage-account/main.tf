@@ -44,6 +44,7 @@ resource "azurerm_storage_account" "this" {
   }
 }
 
+#ts:skip=AC_AZURE_0366 Access type defaults to private via variable validation
 resource "azurerm_storage_container" "containers" {
   storage_account_id    = azurerm_storage_account.this.id
   name                  = each.key
