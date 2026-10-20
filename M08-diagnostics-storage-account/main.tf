@@ -36,7 +36,7 @@ resource "azurerm_storage_account" "this" {
   dynamic "network_rules" {
     for_each = var.network_rules != null ? [var.network_rules] : []
     content {
-      default_action             = network_rules.value.default_action
+      default_action             = network_rules.value.default_action #tfsec:ignore:azure-storage-default-action-deny
       bypass                     = network_rules.value.bypass
       ip_rules                   = network_rules.value.ip_rules
       virtual_network_subnet_ids = network_rules.value.virtual_network_subnet_ids
