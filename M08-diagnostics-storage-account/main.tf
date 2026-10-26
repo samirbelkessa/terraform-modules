@@ -45,12 +45,11 @@ resource "azurerm_storage_account" "this" {
 }
 
 resource "azurerm_storage_container" "containers" {
-  # ts:skip=AC_AZURE_0366 Access type defaults to private via variable validation
   storage_account_id    = azurerm_storage_account.this.id
   name                  = each.key
   metadata              = each.value.metadata
   for_each              = local.all_containers
-  container_access_type = each.value.container_access_type # ts:skip=AC_AZURE_0366
+  container_access_type = "private"
 
   depends_on = [
     azurerm_storage_account.this,
