@@ -1,76 +1,13 @@
 # =============================================================================
-# MOVED BLOCKS — Migration from azurerm_policy_set_definition (AzureRM v4)
-#                to azurerm_management_group_policy_set_definition (AzureRM v5)
+# IMPORT BLOCKS — One-time migration from azurerm_policy_set_definition
+#                 to azurerm_management_group_policy_set_definition
+# REMOVE THESE BLOCKS AFTER SUCCESSFUL APPLY ON ALL ENVIRONMENTS
 # =============================================================================
 
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-backup-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-backup-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-corp-nonprod"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-corp-nonprod"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-corp-prod"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-corp-prod"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-cost-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-cost-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-decommissioned"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-decommissioned"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-governance-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-governance-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-identity-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-identity-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-monitoring-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-monitoring-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-network-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-network-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-online-nonprod"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-online-nonprod"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-online-prod"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-online-prod"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-sandbox"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-sandbox"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.caf_initiatives["caf-security-baseline"]
-  to   = azurerm_management_group_policy_set_definition.caf_initiatives["caf-security-baseline"]
-}
-
-moved {
-  from = azurerm_policy_set_definition.custom_initiatives
-  to   = azurerm_management_group_policy_set_definition.custom_initiatives
+import {
+  for_each = local.all_caf_initiatives
+  to       = azurerm_management_group_policy_set_definition.caf_initiatives[each.key]
+  id       = "${var.management_group_id}/providers/Microsoft.Authorization/policySetDefinitions/${each.key}"
 }
 
 # =============================================================================
