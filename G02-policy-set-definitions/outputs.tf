@@ -1,9 +1,9 @@
 # Brainboard auto-generated file.
 
 output "all_initiative_ids" {
-  description = "Map of all custom initiative names (CAF) to their resource IDs."
+  description = "Map of all initiative names (CAF + custom) to their resource IDs."
   value = merge(
-    { for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.id },
+    { for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => v.id },
     { for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.id }
   )
 }
@@ -11,7 +11,7 @@ output "all_initiative_ids" {
 output "archetype_initiative_ids" {
   description = "Map of archetype-specific initiative names to their resource IDs. Use these for Landing Zone assignments."
   value = {
-    for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.id
+    for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => v.id
     if startswith(k, "caf-online-") || startswith(k, "caf-corp-") || k == "caf-sandbox" || k == "caf-decommissioned"
   }
 }
@@ -19,7 +19,7 @@ output "archetype_initiative_ids" {
 output "baseline_initiative_ids" {
   description = "Map of baseline initiative names to their resource IDs. Use these for Root/Platform assignments."
   value = {
-    for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.id
+    for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => v.id
     if contains(["caf-security-baseline", "caf-network-baseline", "caf-monitoring-baseline", "caf-governance-baseline", "caf-backup-baseline", "caf-cost-baseline", "caf-identity-baseline"], k)
   }
 }
@@ -47,21 +47,21 @@ output "builtin_initiatives_for_assignment" {
 output "caf_initiative_ids" {
   description = "Map of CAF initiative names to their resource IDs."
   value = {
-    for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.id
+    for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => v.id
   }
 }
 
 output "caf_initiative_names" {
   description = "Map of CAF initiative keys to their display names."
   value = {
-    for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => v.display_name
+    for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => v.display_name
   }
 }
 
 output "caf_initiatives" {
   description = "Full map of CAF initiatives with all attributes."
   value = {
-    for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : k => {
+    for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : k => {
       id                  = v.id
       name                = v.name
       display_name        = v.display_name
@@ -84,8 +84,8 @@ output "summary" {
   description = "Summary of deployed policy set definitions."
   value = {
     management_group_id      = var.management_group_id
-    total_initiatives        = length(azurerm_management_group_policy_set_definition.custom_initiatives) + length(azurerm_management_group_policy_set_definition.custom_initiatives)
-    caf_initiatives_count    = length(azurerm_management_group_policy_set_definition.custom_initiatives)
+    total_initiatives        = length(azurerm_management_group_policy_set_definition.caf_initiatives) + length(azurerm_management_group_policy_set_definition.custom_initiatives)
+    caf_initiatives_count    = length(azurerm_management_group_policy_set_definition.caf_initiatives)
     custom_initiatives_count = length(azurerm_management_group_policy_set_definition.custom_initiatives)
     builtin_initiatives_enabled = {
       azure_security_benchmark = var.include_azure_security_benchmark
@@ -98,9 +98,8 @@ output "summary" {
       if var.deploy_archetype_initiatives
     ]
     baseline_initiatives = [
-      for k, v in azurerm_management_group_policy_set_definition.custom_initiatives : v.display_name
+      for k, v in azurerm_management_group_policy_set_definition.caf_initiatives : v.display_name
       if contains(["caf-security-baseline", "caf-network-baseline", "caf-monitoring-baseline", "caf-governance-baseline", "caf-backup-baseline", "caf-cost-baseline", "caf-identity-baseline"], k)
     ]
   }
 }
-
