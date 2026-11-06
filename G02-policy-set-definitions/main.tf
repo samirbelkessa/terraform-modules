@@ -1,4 +1,4 @@
-resource "azurerm_policy_set_definition" "caf_initiatives" {
+resource "azurerm_management_group_policy_set_definition" "caf_initiatives" {
   policy_type = "Custom"
   name        = each.key
   metadata = jsonencode({
@@ -27,7 +27,7 @@ resource "azurerm_policy_set_definition" "caf_initiatives" {
   }
 }
 
-resource "azurerm_policy_set_definition" "custom_initiatives" {
+resource "azurerm_management_group_policy_set_definition" "custom_initiatives" {
   policy_type         = "Custom"
   parameters          = each.value.parameters
   name                = each.key
