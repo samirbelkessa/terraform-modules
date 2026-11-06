@@ -1,19 +1,3 @@
-# =============================================================================
-# IMPORT BLOCKS — One-time migration from azurerm_policy_set_definition
-#                 to azurerm_management_group_policy_set_definition
-# REMOVE THESE BLOCKS AFTER SUCCESSFUL APPLY ON ALL ENVIRONMENTS
-# =============================================================================
-
-import {
-  for_each = local.all_caf_initiatives
-  to       = azurerm_management_group_policy_set_definition.caf_initiatives[each.key]
-  id       = "${var.management_group_id}/providers/Microsoft.Authorization/policySetDefinitions/${each.key}"
-}
-
-# =============================================================================
-# CAF INITIATIVES
-# =============================================================================
-
 resource "azurerm_management_group_policy_set_definition" "caf_initiatives" {
   policy_type = "Custom"
   name        = each.key
